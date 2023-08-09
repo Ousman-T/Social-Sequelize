@@ -5,7 +5,6 @@ class Post extends Model{};
 Model.init({
     title: DataTypes.STRING,
     body: DataTypes.STRING,
-    createdAt: DataTypes.STRING
 },
 {
     sequelize: db,
