@@ -22,11 +22,11 @@ describe('Social Sequelzie Test', () => {
 
     }),
     test('User and post 1-many association', async () => {
-        const unoUser = await User.create({name:'one-many', email:'1-many@gmail'});
-        const manyPost = await Post.create({title:'manyPost', body:'manyPost'});
-        await unoUser.setPosts(manyPost);
-        const foundPosts = await unoUser.getPosts();
-        expect(foundPosts instanceof User).toBeTruthy;
+        const test1 = await User.create({name:'1-many', email:'1-many'});
+        const test2 = await Post.create({title:'1-many',body:'1-many'});
+        await test1.setPosts(test2);
+        const foundPosts22 = await test1.getPosts();
+        expect(foundPosts22 instanceof Post).toBeTruthy;
     }),
     test('Post and comment one to many association', async () => {
         const postComments = await Post.create({title:'many-many', body:'many-many'});
@@ -34,6 +34,16 @@ describe('Social Sequelzie Test', () => {
         await postComments.setComments(commentPost);
         const gotComments = await postComments.getComments();
         expect(gotComments instanceof Comment).toBeTruthy;
+    }),
+    test('User-Like many-many', async () => {
+        const recLike = await User.create({name:'likeUser', email:'hi'});
+        const liked = await Like.create({reactionType: 'heart'});
+        await recLike.setLikes(liked);
+        await liked.setUsers(recLike);
+        const foundLike = await recLike.getLikes();
+        const foundUser = await liked.getUsers();
+        expect(foundLike instanceof Like).toBeTruthy;
+        expect(foundUser instanceof User).toBeTruthy;
     })
 
 
